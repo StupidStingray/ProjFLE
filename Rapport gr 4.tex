@@ -1,0 +1,554 @@
+\documentclass[14pt]{article}
+\usepackage[francais]{babel}
+\usepackage[warn]{mathtext}
+\usepackage{amsmath}
+\usepackage[T2A]{fontenc}
+\usepackage{titlesec} 
+\usepackage{pdfpages}
+\usepackage[utf8x]{inputenc} 
+\usepackage{amssymb}
+\usepackage{amsbsy}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\textwidth = 15cm
+\oddsidemargin = 0pt
+\begin{document}
+\begin{titlepage}
+
+ \renewcommand{\labelitemi}{$\bullet$}	
+
+\begin{figure}[htbp]
+ \begin{flushleft} 
+\includegraphics[scale=0.5]{ECL}
+\end{flushleft}
+\end{figure}
+
+\begin{center}
+    \begin{LARGE}
+    Rapport de travaux pratiques\\ TP de FLE tc3\\
+    \vspace{3cm}
+    \textbf{TRANSFERT DE CHALEUR FLUIDE-SOLIDE}
+   
+
+        \vspace{3cm}
+    
+    \textbf{A1a Groupe 4}
+    \vspace{0.5cm}
+    \end{LARGE}
+    \begin{large}
+    \\
+    PINTO ARRATIA Matheus Augusto\\
+    ORLOV Maksim\\
+    GENDREAU Gonzague\\
+    YU Hongzhe\\
+    \vspace{4cm}
+    Lyon, 2016
+    \end{large}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\large
+
+\section{Introduction}
+Les transferts de chaleur entre fluide et solide sont omniprésents dans les systèmes technologiques actuels. Les exemples sont bataille dans de nombreux domaines comme l'aéronautique ou encore l'hydraulique. Par conséquent, une compréhension affûtée de ces phénomènes est indispensable en mécanique des fluides. 
+
+La mécanique recense trois modes d’échanges thermiques : la conduction, la convection (libre et forcée) ainsi que le rayonnement. La plupart du temps, les transferts de chaleur sont une combinaison des trois modes. Néanmoins, ces phénomènes ne sont pas aisément quantifiables ; aussi, chaque système doit être étudié au cas par cas et ce, dans sa globalité. En outre, l’outil principal de modélisation de ces phénomènes est le bilan énergétique ; chaque terme de ces bilans est issu de la théorie de la mécanique des fluides et doit être analysé en fonction du système. Cette démarche théorique doit être confrontée à des résultats expérimentaux qui permettent l’identification de lois empiriques. Ces lois doivent être alors adimensionnées afin de pouvoir être réutilisées pour des systèmes similaires ayant des paramètres différents (géométrie, propriétés du fluide, …). L’étude menée ne prétend pas donner une liste exhaustive de lois empiriques d’échange thermique adimensionnées. L’objectif principal est de comprendre, dans leur diversité, les différents modes d’échange thermiques et de formuler des lois d'échange adimensionnées pour quelques systèmes courants. Par conséquent, le lecteur se verra présenter une démarche d’analyse pouvant être transposée à n’importe quel système impliquant des transferts de chaleur fluide-solide.
+
+Ce rapport s’attache à présenter les résultats expérimentaux ainsi que les modèles utilisés permettant de comprendre et de modéliser les différents modes de transferts de chaleur.
+\newpage
+\section{Convection libre}
+\subsection{Description du phénomène}
+La convection libre (ou naturelle) se distingue de la convection forcée en ceci que le mouvement du fluide n’est pas dû à un apport externe d’énergie mécanique, mais qu’il trouve sa source au sein même du fluide, sous l’effet conjugué de gradients de masse volumique et d’un champ de pesanteur. Les variations de masse volumique sont généralement dûes à des gradients de température, encore que des forces d’accélération (dans les centrifugeuses) ou de Coriolis (dans les transferts atmosphériques), ou encore des gradients de concentration (dans les mélanges), puissent jouer le même rôle.
+
+En fait, dans notre environnement quotidien, les manifestations de la convection libre sont plus présentes que les effets de la convection forcée, même si elles ne sont pas toujours directement perceptibles par nos sens : c’est ainsi que dans n’importe quelle salle d’habitation, nous sommes entourés en permanence de mouvements d’air; celui-ci se réchauffe en montant le long des parois les plus chaudes et se refroidit en descendant le long des parois les plus froides.
+
+Les domaines d’applications sont donc vastes, et concernent aussi bien l’isolation des canalisations que le refroidissement des circuits électriques et électroniques, la thermique du bâtiment et le confort humain, les panaches et la dispersion des effluents, ou encore la thermique de l’atmosphère et des océans.
+\subsection{Rappels Théoriques}
+Dans beaucoup d’applications on peut utiliser une approximation, dite de Boussinesq, qui suppose la masse volumique du fluide proche d’une valeur constante $\rho_0$ et donnée par:
+$$
+\rho=\rho\left(T\right)=\rho_0\left(1-\beta\left(T-T_0\right)\right) \eqno(1)
+$$
+où $\beta$ est le coefficient de dilatation thermique.
+
+On utilise l'équation de QDM avec l'approximation de Boussinesq et l'équation de la température, en supposant que le fluide peut être traité comme incompressible, pour déterminer la vitesse caractéristique de la convection libre.
+$$
+\begin{equation*}
+ \begin{cases}
+   \cfrac{D\overrightarrow{U}}{Dt}=-\cfrac{1}{\rho_0}grad(p')+\nu\Delta\overrightarrow{U}-\overrightarrow{g}\beta\left(T-T_0\right) \\
+   \cfrac{\partial T}{\partial t}+\overrightarrow{U}grad\left(T\right)=a\Delta T\\
+   div\left(\overrightarrow{U}\right)=0\\ 
+ \end{cases}\eqno(2)
+\end{equation*} 
+$$
+
+où $p'=p-\rho_0 \overrightarrow{g} \overrightarrow{x}$ - pression effective.
+
+La résolution d'un système d'équations (2) donne la valeur de la vitesse:
+$$
+U\sim U_c=\left(\beta gl\left(T_s-T_0\right)\right)^{1/2} \eqno(3)
+$$
+Le problème aux limites sans dimension fait apparaître:
+$$
+Re_c=\cfrac{U_cl}{\nu}=\cfrac{l}{\nu}\left(\beta gl\left(T_s-T_0\right)\right)^{1/2} \eqno(4)
+$$
+$$
+Pr=\cfrac{\nu}{a} \eqno(5)
+$$
+Il est conventionnel d'utiliser plutôt le nombre de Grashof:
+$$
+Gr=Re^2_c=\cfrac{\beta gl^3\tilde{T}}{\nu^2} \eqno(6)
+$$
+Le nombre de Grashof représente la relation entre la force motrice de la convection libre et le frein visqueux. Il détermine le régime de la convection libre.  
+
+Dans ce travail, on va utiliser le nombre de Rayleigh, $Ra=Gr\cdot Pr$, plutôt que le nombre de Grashof.
+
+Finalement, le but de cette partie du projet est de déterminer la relation entre le nombre de Nusselt et le nombre de Rayleigh. Le nombre de Nusselt est la relation entre le transfert de chaleur entre le fluide, et le solide par convection et celle de conduction. Nu mesure la capacité du mouvement du fluide à augmenter le transfert de chaleur.
+\newpage
+\subsection{Description de l'installation}
+\begin{figure}[h]
+\begin{center}
+		\begin{minipage}[h]{0.4\linewidth}
+			\includegraphics[scale=0.05, angle = 0]{cuve}
+			\caption{Vue générale de l'installation}
+		\end{minipage}
+	\hfill
+		\begin{minipage}[h]{0.4\linewidth}
+			\includegraphics[scale=0.3]{cuve2}	
+			\caption{Structure intérieure de la cuve [3]}
+		\end{minipage}
+\end{center}
+\end{figure}
+
+
+Ce banc d’essais comporte principalement une cuve cylindrique fermée et un barreau chauffé par effet Joule, situé a l’intérieur de la cuve. Les températures de la surface du barreau et de la paroi de la cuve sont obtenues séparément grâce à une résistance chauffante et grâce à une sonde à résistance de platine. En outre, le banc dispose aussi d’une pompe à vide qui permet de faire varier la pression à l’intérieur.
+\subsection{Objectifs visés}
+\begin{enumerate}
+	\item On souhaite tout d'abord obtenir la courbe caractéristique des sondes de température.
+	\item On souhaite, par ailleurs, obtenir l’évolution de la puissance de convection en fonction de la pression.
+	\item On souhaite, aussi, étudier le rôle de la puissance de rayonnement dans l’échangeur de chaleur.
+	\item On souhaite, enfin, mettre en évidence une relation entre les nombres sans dimension que sont ceux de Nusselt et de Reynold ; le nombre de Grashof caractérisant lui, la convection libre dans un fluide. Il correspond au rapport des forces de gravité sur les forces visqueuses. 
+\end{enumerate}
+
+L’objectif est donc, ici, d’établir une relation du type: Nu = f(Gr, Pr) et ce tel que :
+$$
+Nu=\cfrac{hd}{k};~~~
+Pr=\cfrac{C_p \mu}{k};~~~
+Gr=\cfrac{\beta g\Delta T_{air-barreau}d^3_b}{\mu^2} \eqno(7)
+$$
+\begin{itemize}
+ \renewcommand{\labelitemi}{$\bullet$}
+	\item $h$ - coefficient d’échange thermique;
+	\item $d_b$ - distance caractéristique de l’écoulement, ici elle correspond au diamètre extérieur du barreau;
+	\item $k$ - conductivité thermique du fluide;
+	\item $\beta$ - accélération de la pesanteur;
+	\item $\mu$ - viscosité dynamique du fluide;
+	\item $C_p$ - chaleur massique à pression constante.
+\end{itemize}
+\subsection{Résolution}
+Pour cette expérience, le seul paramètre qui varie est la pression à l’intérieur de la cuve. La puissance électrique fournie au barreau reste, quant à elle, constante. Cette variation de pression induit une variation de température du barreau et de l’air à l’intérieur de la cuve. Le calcul de ces trois nombres adimensionnés est explicité ci- dessous.
+
+Prandlt reste, lui, constant sous l’hypothèse du gaz parfait et sa valeur est obtenue grâce à des tables de référence.
+
+La seule inconnue dans le calcul du nombre de Nusselt est le coefficient h. Ce dernier est obtenu en exprimant la loi d’échange thermique d’un barreau en convection libre avec le fluide environnant. Pour cela, on réalise un nouveau bilan thermique appliqué au fluide en émettant l’hypothèse d'un régime stationnaire:
+$$
+\Phi_{elec}=\Phi_{b\rightarrow air}+\Phi_{rayonnement}+\Phi_{fils} \eqno(8)
+$$
+
+$\Phi_{elec}$ est fixé par la puissance électrique qui est fournie au barreau (3,6W).\\
+$$
+\Phi_{b\rightarrow air}=hS\left(T_b-T_{air}\right) \eqno(9)
+$$
+avec S la surface du barreau, $T_b$ et $T_air$ les températures respectives du barreau et de l’air contenu dans la cuve. Elles sont obtenues grâce à des sondes.
+$$
+\Phi_{rayonnement}=S \sigma \varepsilon}\left(T_b^4-T_{cuve}^4\right) \eqno(10)
+$$
+d’après l’hypothèse du rayonnement d’un corps gris dans une situation particulière. L’émissivité $\varepsilon$ peut se mettre en facteur car le barreau et la cuve sont supposés recouverts d’une peinture noire identique.
+\newpage
+$$
+\Phi_{fils}=\cfrac{2\lambda_{Cu}S_{fil}\left(T_b-T_{cuve}\right)}{L_{fil}} \eqno(11)
+$$
+selon l’hypothèse d’un transfert par conduction.
+
+On obtient alors:
+$$
+h=\cfrac{P-\sigma S_b\varepsilon \left(T^4_b-T^4_{cuve}\right)-\cfrac{2\lambda_{Cu}S_{fil}\left(T_b-T_{cuve}\right)}{L_{fil}}}{S_b\Delta T_{air-barreau}} \eqno(12)
+$$
+Enfin, on effectue le calcul du nombre de Grashof. Les différents paramètres sont obtenus grâce à des tables de référence et en émettant l’hypothèse du gaz parfait. 
+
+Le tracé de la relation Nu = f(Ra) est alors possible.
+\subsection{Résultats}
+\begin{figure}[h]
+\begin{center}
+		\begin{minipage}[h]{0.4\linewidth}
+			\includegraphics[scale=0.6]{FluxPres}
+			\caption{Flux thermique par convection par rapport à la pression}
+		\end{minipage}
+	\hfill
+		\begin{minipage}[h]{0.4\linewidth}
+			\includegraphics[scale=0.6]{NuRa}	
+			\caption{Relation entre Nu et Ra}
+		\end{minipage}
+\end{center}
+\end{figure}
+
+Pour une plaque verticale, on utilise la relation suivante comme une loi de la relation entre Nu et Ra :
+
+\begin{equation*}
+Nu= 
+ \begin{cases}
+   0.59\cdot Ra^{1/4} ~~Ra < 10^{9}\\
+   0.1\cdot Ra^{1/3}~~~Ra>10^9
+ \end{cases}\eqno(13)
+\end{equation*} 
+
+La comparaison des résultats de l'expérience avec la relation théorique est présentée à la Figure 4. Les valeurs de Nu correspondent bien à la loi théorique.
+\section{Convection forcée}
+\subsection{Rappels théoriques}
+Lorsqu’on examine (par exemple) le champ de températures dans un solide entouré par un fluide, on voit bien que l’on ne peut pas résoudre complètement le problème: il faudrait calculer l’écoulement lui même et l’équation de transport de la chaleur dans cet écoulement, ce qui est souvent quasi impossible. On peut, pour simplifier le problème thermique, définir le coefficient d’échange h qui traduit de manière empirique les échanges de chaleur de l’intérieur (ici le solide) avec l’extérieur (ici le fluide).
+On posera, par définition, que le flux à la paroi du solide est relié à l’écart entre la température de surface du solide et la température moyenne extérieure:
+$$
+\overrightarrow{q}=-h\cdot\left(T_f-T_c\right)\cdot\overrightarrow{n}  \eqno(14)
+$$
+Avec $T_c$ la température au point considéré de la paroi et $T_f$ la température du fluide extérieur supposée donnée (uniforme, voire lentement variable). La normale extérieure est notée $\overrightarrow{n}$.
+
+D'habitude, on utilise la version sans dimension du coefficient d’échange h (le nombre de Nusselt) plutôt que le coefficient h propre. Le nombre de Nusselt est la relation entre le transfert de chaleur entre le fluide et le solide par convection et celle de conduction. Nu mesure la capacité du mouvement du fluide à augmenter le transfert de chaleur.
+$$
+Nu=\cfrac{h\cdot l}{k} \eqno(15)
+$$
+
+Le but de cette partie est de déterminer la relation entre le nombre de Nusselt et des paramètres du système étudié.
+\newpage 
+\subsection{Description de l'installation}
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[scale=0.08, angle = 0]{cchauf}
+	\caption{Installation de la conduite chauffée}			
+\end{center}
+\end{figure}
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[scale=0.3, angle = 0]{schema}
+	\caption{Géométrie de la partie supérieure de la conduite et positions des sondes de température (en mm) [5]}			
+\end{center}
+\end{figure}
+\newpage
+Le système est muni d’un ventilateur centrifuge qui provoque un écoulement d’air dans une conduite de forme cylindrique. La partie supérieure de la conduite est chauffée et calorifugée par un câble résistif. Différents capteurs de température sont disposés comme en témoignent la figure avec ces 15 sondes de platine. Il y a, en outre, un thermomètre à mercure, qui mesure la température dans la paroi et celle du fluide le long de la conduite.
+
+La modification du débit se fait au niveau du ventilateur à l’aide d’un contre écrou ; la variation de puissance se fait, quant à elle, au niveau du panneau du contrôle.
+\subsection{Expérience escomptée et objectifs visés}
+
+Les transferts thermiques mis en jeu sont la convection forcée et la conduction. Pendant cette expérience, on souhaite déterminer les nombrés adimensionnés de Reynolds, Prandtl et Nusselt qui caractérisent le régime de l’écoulement, la rapidité des phénomènes thermiques vis-à-vis des phénomènes dynamiques dans un fluide et le rapport des effets de convection sur ceux de conduction. Un nombre de Prandtl élevé indique que le profil de température dans le fluide sera fortement influencé par le profil de vitesse. Il existe, en effet, une relation théorique entre ces trois nombres (source: fiche technique de la conduite chauffée) appelée loi de Colburn que l’on souhaite vérifier qu'il soit de la forme suivante:
+$$
+Nu=0.023\cdot Re^{0.8} \cdot Pr^{0.4} \eqno(16)
+$$
+Avec:
+$$
+Nu=\cfrac{hl}{k};~~~Re=\cfrac{\rho l U_{\infty}}{\mu};~~~ Pr=\cfrac{C_p \mu}{k} \eqno(17)
+$$
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item $h$ - coefficient d’échange thermique;
+	\item $l$ - distance caractéristique de l’écoulement, ici, le diamètre de la conduite;
+	\item $k$ - conductivité thermique du fluide;
+	\item $\rho$ - masse volumique du fluide;
+	\item $u$ - vitesse d’écoulement du fluide;
+	\item $\mu$ - viscosité dynamique du fluide;
+	\item $C_p$ - chaleur massique de l’air à pression constante.
+\end{itemize}
+
+Les variables mesurées ici sont : le coefficient d’échange thermique h et la vitesse d’écoulement $U$.
+Le coefficient d’échange thermique h peut être modifié en faisant varier la puissance de chauffe du câble résistif. Pour le calculer, un bilan thermique est réalisé avec deux hypothèses. La première est que la puissance électrique doit être transformée intégralement en puissance thermique afin que cette dernière puisse chauffer la paroi. C'est une hypothèse envisageable car la partie supérieure de la conduite est calorifugée. La deuxième hypothèse est que le régime stationnaire est atteint car il y un temps d’attente avant chaque mesure afin de vérifier qu’aucune variation temporelle de température ne soit manifeste.
+
+Il vient alors:
+$$
+P=h\pi D l \Delta T \eqno(18)
+$$
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item $P$ - puissance de chauffe;
+	\item $D$ - diamètre de la conduite;
+	\item $l$ - longueur de la conduite;
+	\item $\Delta T = T_{paroi}-T_{fluide}$ -différence de température entre la paroi et le fluide chauffé.
+\end{itemize}
+
+Pour mesurer $\Delta T$, on effectue la détermination d’une différence de température moyenne dans la conduite. (cf. annexe A)
+
+La vitesse d’écoulement $U$ est déterminée à partir du débit qui est lui-même obtenu grâce à un manomètre situé au niveau du diaphragme. La variation du débit s’effectue en fermant plus ou moins le ventilateur.
+
+On a en effet [5]:
+$$
+Q_m=0.654S_{dia}\left(2\rho \Delta P\right)^{1/2} \eqno(19)
+$$
+$$
+u=\cfrac{Q_m}{\rho S} \eqno(20)
+$$
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item $Q_m$ - débit massique;
+	\item $S_{dia}$ - section du diaphragme;
+	\item $\rho$ - masse volumique de l’air;
+	\item $\Delta P$ - différence de pression mesurée autour du diaphragme;
+	\item $S$ - section de la conduite.
+\end{itemize}
+
+Ainsi, en obtenant différentes valeurs de h et de u, on peut calculer les nombres adimensionnés de Nusselt, Reynolds et Prandtl correspondants.
+\newpage
+\subsection{Résultats}
+
+\begin{figure}[h]
+\begin{center}
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Forcee/NuC}
+		\end{center}
+		\end{minipage}
+	\hfill
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Forcee/NuCp}	
+			\end{center}
+		\end{minipage}
+		\caption{Relation entre Nu et Re}
+\end{center}
+\end{figure}
+
+Sur la Figure 7, l'évolution du nombre de Nusselt en fonction du nombre de Reynolds dans la conduite est présentée. On constate que la loi de Colburn ne correspond pas exactement aux résultats obtenus. 
+
+Donc on utilise une autre loi, où la différence des paramètres du fluide entre le centre d'écoulement et la paroi est prise en compte [6]:
+$$
+Nu = 0.021\cdot Re^{0.8} \cdot Pr_{f}^{0.43} \left(\cfrac{Pr_{f}}{Pr_p}\right)^{0.25} \eqno(21)
+$$
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item $Pr_f$ - nombre de Prandtl, calculé avec la température moyenne du fluide;
+	\item $Pr_p$ - nombre de Prandtl, calculé avec la température moyenne de la paroi;
+\end{itemize}
+\begin{figure}[h]
+\begin{center}
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Forcee/NuM}
+		\end{center}
+		\end{minipage}
+	\hfill
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Forcee/NuMp}	
+			\end{center}
+		\end{minipage}
+		\caption{Relation entre Nu et Re}
+\end{center}
+\end{figure}
+
+La comparaison de la loi utilisée avec les résultats expérimentaux est montrée par la Figure 8. Ici, la meilleure conformité a lieu.
+\newpage
+\section{Echangeur de chaleur}
+\subsection{Description du phénomène}
+Un échangeur de chaleur est un système qui permet de transférer un flux de chaleur d’un fluide chaud à un fluide froid à travers une paroi sans contact direct entre les deux fluides. Il existe un grand nombre de réalisations des échangeurs de chaleur. Dans l'annexe B est présenté le calcul général de l'échangeur typique. 
+\subsection{Description de l'installation}
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}[h]{0.45\linewidth}
+	\includegraphics[scale=0.055, angle = 0]{ech1}
+	\caption{Vue générale de l'installation}			
+\end{minipage}
+	\hfill
+\begin{minipage}[h]{0.45\linewidth}
+
+
+	\includegraphics[scale=0.3, angle = 0]{Echangeur/Scema.png}
+	\caption{Schéma principal de l'installation [7]}	
+	\end{minipage}		
+\end{center}
+\end{figure}
+L’installation permet la caractérisation d’un échangeur de chaleur, sans changement de phase. Sur un échangeur liquide - liquide, monté à contre-courant, il est possible de mettre en évidence l’influence des écarts de température sur le flux de chaleur échangé, que l’on peut caractériser par un coefficient global d’échange.
+
+Le banc est constitué de:
+
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item un circuit fermé d’huile;
+	\item un circuit d’eau alimenté par le réseau;
+	\item un échangeur de chaleur industriel;
+	\item un bac vidangeable avec niveau, pour la mesure du débit d’eau, plus un débitmètre à flotteur avec suiveur et transmission numérique.
+\end{itemize}
+
+Quatre thermocouples permettent de mesurer la température d'entrée et de sortie de l'huile et de l'eau.
+\subsection{Expérience escomptée et objectifs visés}
+Pendant cette expérience, on souhaite déterminer des paramètres, caractérisant l'échangeur: le coefficient global de transfert $\alpha_G$ et l'efficacité d’un échangeur $\varepsilon$. Le but est de déterminer la relation entre eux et le débit massique. Tous les traitements sont présentés en annexes.
+$$
+\alpha_G=\cfrac{\Phi}{\Delta T_L} \eqno(22)
+$$
+$$
+\varepsilon = \cfrac{1-exp\left(-NUT\left(1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}\right)\right)}{1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}exp\left(-NUT\left(1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}\right)\right)} \eqno(23)
+$$
+\begin{itemize}
+\renewcommand{\labelitemi}{$\bullet$}
+	\item $\Phi$ - flux de chaleur;
+	\item $\Delta T_L$ - la moyenne logarithmique (MLDT) de la fonction $\Delta T$ entre l’entrée et la sortie de l’échangeur;
+	\item $NUT$ - nombre d’unité de transfert;
+	\item $Q_m$ - débit massique;
+	\item $C_p$ - chaleur massique à pression constante.
+\end{itemize}
+\newpage
+\subsection{Résultats}
+\begin{figure}[h]
+\begin{center}
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Echangeur/AlphaG1}
+		\end{center}
+		\caption{Relation entre le coefficient global de transfert et le débit volumique}
+		\end{minipage}
+	\hfill
+		\begin{minipage}[h]{0.4\linewidth}
+		\begin{center}
+			\includegraphics[scale=0.6]{Echangeur/Epsilon}	
+			\end{center}
+			\caption{Relation entre l'efficacité d’un échangeur et NUT}
+		\end{minipage}
+\end{center}
+\end{figure}
+
+On vérifie la conformité du coefficient global de transfert trouvé par l'expérience et celle de la loi théorique:   
+$$
+\alpha_G = \cfrac{835.3}{1+\cfrac{3.166}{Q_{me}^{1/3}}} \eqno(24)
+$$
+où $Q_{me}$ - le débit massique de l'eau.
+On trouve que la théorie correspond bien à l'expérience (Figure 11).
+
+Dans le cas de l'efficacité (Figure 12), le nombre des mesures effectuées n'est pas suffisant pour obtenir une image exacte de $\varepsilon = f(NUT)$.
+\newpage
+\section{Conclusion}
+
+On a étudié la loi de transfert de chaleur entre le fluide et le solide. On a trouvé les paramètres, influençant le plus sur le transfert de chaleur. Dans le cas de la convection libre, c'était la pression. Et dans le cas de la convection forcée, c'était la vitesse de l'écoulement. En effet, le valeur de la convection est déterminé par la vitesse de l'écoulement, quelle que soit la nature de la convection.
+
+Pour tout type de convection, le nombre de Nusselt a été calculé mais son évolution a été étudiée en fonction de nombres différents. Cependant ces lois, si elles sont établies avec précision, peuvent permettre d’accéder à différents éléments importants sur le système étudié sans avoir à effectuer de mesures expérimentales ( qui peuvent être onéreuses, longues ou complexes) et ce pour de multiples configurations (longueur du système, environnement, caractéristiques du fluide et des matériaux concernés...) du fait de l'adimensionnement des nombres. Elles sont donc d’une grande importance en pratique et leur connaissance est d’une grande aide pour le dimensionnement d’un système que ce soit en thermodynamique ou dans des domaines d’ingénierie plus larges.
+
+Par ailleurs, on a étudié l'application de la convection dans l'échangeur de chaleur. On a étudié des bases de calcul des échangeurs. 
+
+\newpage
+\begin{thebibliography}{99}
+\bibitem{Leo}
+A. LEONTIEV, Théorie des échanges de chaleur et de masse – Édition Mir-Moscou;\bibitem{Pedagogie}Platforme pedagogie https://pedagogie.ec-lyon.fr;
+\bibitem{cuve}
+Banc d’essai cuve;
+\bibitem{Lagree}
+P.-Y. Lagr ́ee, Coefficient d’ ́echange, Ailettes;
+
+\bibitem{CC}
+Fiche technique de la conduite chauffée;
+\bibitem{Iva}
+V.L. Ivanov, A.I. Leontiev, E.A. Manushin, and M.I. Osipov, Heat
+Exchanging Apparatuses and Cooling Systems for Gas-Turbine and Combined
+Installations, MSU, Moscow, 2004. 
+\bibitem{ech}
+Fiche technique du échangeur plaques;
+\bibitem{ecc}
+Les Échangeurs Thermiques
+http://gsi-energie.univ-rouen.fr/IMG/pdf/cours-iup-me-echangeurthermique-2.pdf.\end{thebibliography}
+\newpage
+\section{Annexes}
+\subsection*{A. Mesure de la différence de la température dans la conduite chauffée}
+
+La température de la paroi est mesurée aux 13 capteurs le long de la conduite. Celle du fluide est mesurée seulement à l'entrée et à la sortie et son évolution spatiale est simulée en supposant qu’elle est linéaire en x (ce que l’on peut montrer par un bilan énergétique appliqué à une tranche de la conduite en régime stationnaire ). Les 13 différences $(T_{paroi}-T_{fluide} )$ sont calculées et la valeur moyenne est utilisée pour le calcul de h.
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[scale=1, angle = 0]{Forcee/T}
+	\caption{Variation de la température du paroi et du fluide le long de la conduite.}			
+\end{center}
+\end{figure}
+\newpage
+\subsection*{B. Calcul de l'échangeur de chaleur.}
+\subsubsection*{Coefficient global de transfert}
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[scale=0.5, angle = 0]{cicle}
+	\caption{Distribution des températures dans un échangeur à contre-courant. [8]}
+	\end{center}
+\end{figure}
+Pour déterminer des relations nécessaires pour le traitement des données, on va effectuer le calcul de l'échangeur typique.
+On commence par définir la quantité élémentaire de chaleur $d\Phi$:
+
+$$
+d\Phi=(Q_mC_p)_{c}\cdot dT_{c} = (Q_mC_p)_{f}\cdot dT_{f} \eqno(25)
+$$
+En même temps:
+$$
+d\Phi = K(T_{c}-T_{f})dF \eqno(26)
+$$
+où K - coefficient de transfert de chaleur $[W*m^{-2}*C^o^{-1}]$, $dF$ - élément de la surface de transfert.
+
+\begin{equation*}
+(2),~(3) \Rightarrow 
+ \begin{cases}
+   d(T_{c}-T_{f})=K\left(\cfrac{1}{(Q_mC_p)_{c}}-\cfrac{1}{(Q_mC_p)_{f}}\right)dF\left(T_{c}-T_{f}\right) \\
+   d\left(T_{c}-T_{f}\right)=d\Phi\left(\cfrac{1}{(Q_mC_p)_{c}}-\cfrac{1}{(Q_mC_p)_{f}}\right) 
+ \end{cases}\eqno(27)
+\end{equation*} 
+
+On intègre le système (27) le long de l'échangeur et on obtient:
+
+\begin{equation*} 
+ \begin{cases}
+	ln\left(\cfrac{\Delta T_1}{\Delta T_2}\right)=KF\left(\cfrac{1}{(Q_mC_p)_{c}}-\cfrac{1}{(Q_mC_p)_{f}}\right) \\
+	\Delta T_1-\Delta T_2=\Phi\cdot \left(\cfrac{1}{(Q_mC_p)_{c}}-\cfrac{1}{(Q_mC_p)_{f}}\right)
+	 \end{cases}\eqno(28)
+\end{equation*} 
+où $\Delta T_1$ et $\Delta T_2$ - différences de la température à l'entrée et à la sortie de l'échangeur (Figure 14).
+
+En résolvant le système (28) on obtient le flux thermique pour l'échangeur de chaleur à contre-courant:
+$$
+\Phi=\cfrac{KF\left(\Delta T_1-\Delta T_2\right)}{ln\frac{\Delta T_1}{\Delta T_2}} \eqno(29)
+$$
+On introduit le coefficient global de transfert $\alpha_G = KF$ et $\Delta T_L = \cfrac{\Delta T_1-\Delta T_2}{ln\frac{\Delta T_1}{\Delta T_2}}$ - la moyenne logarithmique (MLDT) de la fonction $\Delta T$ entre l’entrée et la sortie de l’échangeur;
+
+On obtient la relation finale pour le coefficient global de transfert:
+$$
+\alpha _G= \cfrac{\Phi}{\Delta T_L} \eqno(30)
+$$
+
+\subsubsection*{Efficacité d’un échangeur}
+
+L’efficacité d’un échangeur est le rapport entre la puissance thermique réellement échangée avec la puissance d’échange maximale théoriquement possible, dans les mêmes conditions d’entrées des fluides( nature, débit,..) dans l’échangeur.
+$$
+\varepsilon=\cfrac{\Phi_{reel}}{\Phi_{max}} \eqno(31)
+$$
+$$
+\varepsilon=\cfrac{(Tc_e-Tc_s)(Q_mC_p)_c}{(Tc_e-Tf_e)(Q_mC_p)_{min}} \eqno(32)
+$$
+$$
+\varepsilon=\cfrac{(Tf_s-Tf_e)(Q_mC_p)_f}{(Tc_e-Tf_e)(Q_mC_p)_{min}} \eqno(32)
+$$
+On met la valeur de $\varepsilon$ dans (28.1):
+$$
+ln\cfrac{1-\varepsilon \frac{(Q_mC_p)_c}{(Q_mC_p)_f}}{1-\varepsilon}=\left(1-\cfrac{(Q_mC_p)_c}{(Q_mC_p)_f}\right)\cfrac{\alpha_G}{(Q_mC_p)_c} \eqno(33)
+$$
+On utilise le nombre d’unité de transfert (NUT).On appelle nombre d’unité de transfert, noté NUT, le rapport adimensionnel. Le NUT est représentatif du pouvoir d’échange de l’échangeur.
+$$
+NUT = \cfrac{\alpha_G}{(Q_mC_p)_{min}}	\eqno(34)
+$$
+D'habitude $(Q_mC_p)_{min} = (Q_mC_p)_c$
+
+$$
+(34)\rightarrow (33) \Rightarrow ln\cfrac{1-\varepsilon \frac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}}{1-\varepsilon}=\left(1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}\right)NUT \eqno(35)
+$$
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[scale=0.25, angle = 0]{Epsilon}
+	\caption{Epsilon= f(NUT,(QmCp)min/(QmCp)max, configuration de l’écoulement) [8]}			
+\end{center}
+\end{figure}
+\newpage
+Et finalement:
+$$
+\varepsilon = \cfrac{1-exp\left(-NUT\left(1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}\right)\right)}{1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}exp\left(-NUT\left(1-\cfrac{(Q_mC_p)_{min}}{(Q_mC_p)_{max}}\right)\right)} \eqno(36)
+$$
+La relation $\varepsilon=f(NUT)$ pour des conditions différentes est présentée à la Figure 15 pour un échangeur à co-courant et à contre-courant.
+
+
+\includepdf{Fiche.pdf}
+
+\end{document}
